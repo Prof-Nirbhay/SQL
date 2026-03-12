@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 2 - DBMS</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1000px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+code{
+    background:#f1f1f1;
+    padding:4px 6px;
+    border-radius:4px;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 2: DBMS (Database Management System)</h1>
+
+<hr>
+
+<h2>1. What is DBMS?</h2>
+
+<p>
+A <b>DBMS (Database Management System)</b> is software that allows users to create, manage, store, retrieve, and control data in a database.
+</p>
+
+<p>
+It acts as an interface between the user and the database.
+</p>
+
+<div class="note">
+Database = Collection of data  
+DBMS = Software to manage that data
+</div>
+
+<h3>Example:</h3>
+
+<p>
+If Database is a library, then DBMS is the librarian who manages books.
+</p>
+
+<h3>Simple Diagram Concept:</h3>
+
+<p>
+User → DBMS → Database
+</p>
+
+<h3>SQL Example:</h3>
+
+<pre>
+CREATE DATABASE College;
+
+USE College;
+
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks INT
+);
+
+INSERT INTO Students VALUES (101, 'Rahul', 85);
+
+SELECT * FROM Students;
+</pre>
+
+<hr>
+
+<h2>2. Functions of DBMS</h2>
+
+<h3>1. Data Storage Management</h3>
+<p>Stores and organizes data efficiently.</p>
+
+<h3>2. Data Retrieval</h3>
+<p>Allows users to retrieve data using queries.</p>
+
+<h3>3. Data Security</h3>
+<p>Provides authentication and authorization.</p>
+
+<h3>4. Data Integrity</h3>
+<p>Maintains accuracy and consistency of data.</p>
+
+<h3>5. Concurrency Control</h3>
+<p>Allows multiple users to access data simultaneously.</p>
+
+<h3>6. Backup and Recovery</h3>
+<p>Restores data in case of failure.</p>
+
+<h3>7. Transaction Management</h3>
+<p>Ensures ACID properties (Atomicity, Consistency, Isolation, Durability).</p>
+
+<hr>
+
+<h2>3. Advantages of DBMS</h2>
+
+<ul>
+<li>Reduced Data Redundancy</li>
+<li>Improved Data Consistency</li>
+<li>Better Security</li>
+<li>Data Sharing</li>
+<li>Backup & Recovery Support</li>
+<li>Integrity Constraints</li>
+<li>Centralized Control</li>
+</ul>
+
+<hr>
+
+<h2>4. Disadvantages of DBMS</h2>
+
+<ul>
+<li>High Cost (Software & Hardware)</li>
+<li>Complexity</li>
+<li>Requires Skilled Staff</li>
+<li>Performance Overhead</li>
+<li>Risk of Central Failure</li>
+</ul>
+
+<hr>
+
+<h2>5. Types of DBMS</h2>
+
+<h3>1. Hierarchical DBMS</h3>
+<p>
+Data organized in tree structure (Parent → Child).
+</p>
+
+<p><b>Example:</b> Organization structure</p>
+
+<h3>2. Network DBMS</h3>
+<p>
+Data organized in graph structure (Many-to-Many relationships).
+</p>
+
+<h3>3. Relational DBMS (RDBMS)</h3>
+<p>
+Data stored in tables (rows & columns).
+Uses SQL.
+</p>
+
+<h3>4. Object-Oriented DBMS (OODBMS)</h3>
+<p>
+Stores data as objects (like in OOP).
+</p>
+
+<hr>
+
+<h2>Comparison of DBMS Types</h2>
+
+<table>
+<tr>
+<th>Type</th>
+<th>Structure</th>
+<th>Relationship</th>
+<th>Flexibility</th>
+</tr>
+<tr>
+<td>Hierarchical</td>
+<td>Tree</td>
+<td>One-to-Many</td>
+<td>Low</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>Graph</td>
+<td>Many-to-Many</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Relational</td>
+<td>Table</td>
+<td>Uses Keys</td>
+<td>High</td>
+</tr>
+<tr>
+<td>Object-Oriented</td>
+<td>Objects</td>
+<td>Object References</td>
+<td>Very High</td>
+</tr>
+</table>
+
+<hr>
+
+<h2>6. Examples of DBMS Software</h2>
+
+<table>
+<tr>
+<th>Software</th>
+<th>Type</th>
+<th>Developed By</th>
+</tr>
+<tr>
+<td>MySQL</td>
+<td>Relational</td>
+<td>Oracle</td>
+</tr>
+<tr>
+<td>Oracle DB</td>
+<td>Relational</td>
+<td>Oracle Corporation</td>
+</tr>
+<tr>
+<td>Microsoft SQL Server</td>
+<td>Relational</td>
+<td>Microsoft</td>
+</tr>
+<tr>
+<td>MongoDB</td>
+<td>NoSQL</td>
+<td>MongoDB Inc.</td>
+</tr>
+<tr>
+<td>IBM DB2</td>
+<td>Relational</td>
+<td>IBM</td>
+</tr>
+</table>
+
+<hr>
+
+<h2>File System vs DBMS (Quick Revision)</h2>
+
+<table>
+<tr>
+<th>File System</th>
+<th>DBMS</th>
+</tr>
+<tr>
+<td>Manual data management</td>
+<td>Automated data management</td>
+</tr>
+<tr>
+<td>No relationships</td>
+<td>Supports relationships</td>
+</tr>
+<tr>
+<td>No concurrency control</td>
+<td>Supports concurrency</td>
+</tr>
+<tr>
+<td>No transaction management</td>
+<td>Supports transactions</td>
+</tr>
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter1-database.html" class="nav-btn">← Previous → Database</a>
+<a href="chapter3-sql.html" class="nav-btn">Next → SQL</a>
+</div>
+
+</div>
+
+</body>
+</html>

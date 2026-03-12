@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SQL Commands</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>SQL Commands (DDL, DML, DCL, TCL)</h1>
+
+<hr>
+
+<h2>Introduction</h2>
+
+<p>
+SQL commands are divided into four major categories based on their function:
+</p>
+
+<ul>
+<li>DDL – Data Definition Language</li>
+<li>DML – Data Manipulation Language</li>
+<li>DCL – Data Control Language</li>
+<li>TCL – Transaction Control Language</li>
+</ul>
+
+<hr>
+
+<h2>1. DDL – Data Definition Language</h2>
+
+<p>
+DDL commands are used to define and modify the structure of database objects like tables, databases, and indexes.
+</p>
+
+<h3>Common DDL Commands</h3>
+
+<table>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+<tr>
+<td>CREATE</td>
+<td>Create database or table</td>
+</tr>
+<tr>
+<td>ALTER</td>
+<td>Modify table structure</td>
+</tr>
+<tr>
+<td>DROP</td>
+<td>Delete table/database</td>
+</tr>
+<tr>
+<td>TRUNCATE</td>
+<td>Delete all records (no rollback)</td>
+</tr>
+</table>
+
+<h3>Examples</h3>
+
+<pre>
+-- Create Database
+CREATE DATABASE College;
+
+-- Create Table with Constraints
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Marks INT CHECK (Marks >= 0),
+    Email VARCHAR(100) UNIQUE
+);
+
+-- Add New Column
+ALTER TABLE Students ADD Age INT;
+
+-- Remove Column
+ALTER TABLE Students DROP COLUMN Age;
+
+-- Delete Table
+DROP TABLE Students;
+</pre>
+
+<div class="note">
+DDL commands automatically commit changes.
+</div>
+
+<hr>
+
+<h2>2. DML – Data Manipulation Language</h2>
+
+<p>
+DML commands are used to manage data inside tables.
+</p>
+
+<h3>Common DML Commands</h3>
+
+<table>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+<tr>
+<td>INSERT</td>
+<td>Add new record</td>
+</tr>
+<tr>
+<td>SELECT</td>
+<td>Retrieve data</td>
+</tr>
+<tr>
+<td>UPDATE</td>
+<td>Modify data</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td>Remove record</td>
+</tr>
+</table>
+
+<h3>Examples</h3>
+
+<pre>
+-- Insert Data
+INSERT INTO Students VALUES (101, 'Rahul', 85, 'rahul@gmail.com');
+
+-- Select All Records
+SELECT * FROM Students;
+
+-- Select Specific Columns
+SELECT Name, Marks FROM Students WHERE Marks > 80;
+
+-- Update Data
+UPDATE Students
+SET Marks = 90
+WHERE RollNo = 101;
+
+-- Delete Record
+DELETE FROM Students
+WHERE RollNo = 101;
+</pre>
+
+<div class="note">
+DML commands can be controlled using COMMIT and ROLLBACK.
+</div>
+
+<hr>
+
+<h2>3. DCL – Data Control Language</h2>
+
+<p>
+DCL commands control user access and permissions.
+</p>
+
+<h3>Common DCL Commands</h3>
+
+<table>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+<tr>
+<td>GRANT</td>
+<td>Give permission</td>
+</tr>
+<tr>
+<td>REVOKE</td>
+<td>Remove permission</td>
+</tr>
+</table>
+
+<h3>Examples</h3>
+
+<pre>
+-- Give SELECT permission
+GRANT SELECT ON Students TO user1;
+
+-- Give Full Access
+GRANT ALL PRIVILEGES ON Students TO user1;
+
+-- Remove Permission
+REVOKE SELECT ON Students FROM user1;
+</pre>
+
+<hr>
+
+<h2>4. TCL – Transaction Control Language</h2>
+
+<p>
+TCL commands manage transactions.
+A transaction is a group of SQL statements executed as a single unit.
+</p>
+
+<h3>Common TCL Commands</h3>
+
+<table>
+<tr>
+<th>Command</th>
+<th>Purpose</th>
+</tr>
+<tr>
+<td>COMMIT</td>
+<td>Save changes permanently</td>
+</tr>
+<tr>
+<td>ROLLBACK</td>
+<td>Undo changes</td>
+</tr>
+<tr>
+<td>SAVEPOINT</td>
+<td>Create rollback point</td>
+</tr>
+</table>
+
+<h3>Example</h3>
+
+<pre>
+INSERT INTO Students VALUES (102, 'Priya', 88, 'priya@gmail.com');
+
+SAVEPOINT A;
+
+UPDATE Students SET Marks = 95 WHERE RollNo = 102;
+
+ROLLBACK TO A;
+
+COMMIT;
+</pre>
+
+<div class="note">
+TCL ensures data consistency using ACID properties.
+</div>
+
+<hr>
+
+<h2>Important SQL Constraints</h2>
+
+<p>
+Constraints are rules applied on table columns to maintain data integrity.
+</p>
+
+<table>
+<tr>
+<th>Constraint</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>PRIMARY KEY</td>
+<td>Uniquely identifies each record</td>
+</tr>
+<tr>
+<td>FOREIGN KEY</td>
+<td>Creates relationship between tables</td>
+</tr>
+<tr>
+<td>NOT NULL</td>
+<td>Prevents NULL values</td>
+</tr>
+<tr>
+<td>UNIQUE</td>
+<td>Ensures all values are different</td>
+</tr>
+<tr>
+<td>CHECK</td>
+<td>Validates condition</td>
+</tr>
+<tr>
+<td>DEFAULT</td>
+<td>Sets default value</td>
+</tr>
+</table>
+
+<h3>Constraint Example</h3>
+
+<pre>
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(50) NOT NULL,
+    Credits INT CHECK (Credits > 0),
+    Status VARCHAR(20) DEFAULT 'Active'
+);
+
+CREATE TABLE Enrollments (
+    RollNo INT,
+    CourseID INT,
+    PRIMARY KEY (RollNo, CourseID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+</pre>
+
+<hr>
+
+<h2>Comparison of SQL Command Types</h2>
+
+<table>
+<tr>
+<th>Type</th>
+<th>Full Form</th>
+<th>Used For</th>
+<th>Examples</th>
+</tr>
+<tr>
+<td>DDL</td>
+<td>Data Definition Language</td>
+<td>Structure</td>
+<td>CREATE, ALTER, DROP</td>
+</tr>
+<tr>
+<td>DML</td>
+<td>Data Manipulation Language</td>
+<td>Data Operations</td>
+<td>INSERT, SELECT, UPDATE, DELETE</td>
+</tr>
+<tr>
+<td>DCL</td>
+<td>Data Control Language</td>
+<td>Permissions</td>
+<td>GRANT, REVOKE</td>
+</tr>
+<tr>
+<td>TCL</td>
+<td>Transaction Control Language</td>
+<td>Transactions</td>
+<td>COMMIT, ROLLBACK</td>
+</tr>
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter3-sql.html" class="nav-btn">← Previous → SQL</a>
+<a href="chapter4-datatypes.html" class="nav-btn">Next → Data Types</a>
+</div>
+
+</div>
+
+</body>
+</html>

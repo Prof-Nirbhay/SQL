@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 5 - SQL Constraints</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 5: SQL Constraints</h1>
+
+<hr>
+
+<h2>What are SQL Constraints?</h2>
+
+<p>
+Constraints are rules applied to table columns to ensure data accuracy, reliability, and integrity.
+They prevent invalid data from being inserted into the database.
+</p>
+
+<div class="note">
+Constraints help maintain Data Integrity.
+</div>
+
+<hr>
+
+<h2>1. NOT NULL Constraint</h2>
+
+<p>
+Ensures that a column cannot store NULL values.
+</p>
+
+<h3>Syntax:</h3>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT,
+    Name VARCHAR(50) NOT NULL
+);
+</pre>
+
+<h3>Example:</h3>
+
+<pre>
+INSERT INTO Students (RollNo, Name)
+VALUES (101, 'Rahul');   -- Valid
+
+INSERT INTO Students (RollNo)
+VALUES (102);            -- Error (Name cannot be NULL)
+</pre>
+
+<hr>
+
+<h2>2. UNIQUE Constraint</h2>
+
+<p>
+Ensures that all values in a column are different.
+Duplicate values are not allowed.
+</p>
+
+<h3>Syntax:</h3>
+
+<pre>
+CREATE TABLE Users (
+    UserID INT,
+    Email VARCHAR(100) UNIQUE
+);
+</pre>
+
+<h3>Example:</h3>
+
+<pre>
+INSERT INTO Users VALUES (1, 'rahul@gmail.com');  -- Valid
+INSERT INTO Users VALUES (2, 'rahul@gmail.com');  -- Error (Duplicate)
+</pre>
+
+<div class="note">
+A UNIQUE column can allow one NULL value (depending on DBMS).
+</div>
+
+<hr>
+
+<h2>3. PRIMARY KEY Constraint</h2>
+
+<p>
+Uniquely identifies each record in a table.
+It cannot contain NULL values and must be unique.
+</p>
+
+<h3>Syntax:</h3>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+</pre>
+
+<h3>Composite Primary Key Example:</h3>
+
+<pre>
+CREATE TABLE Enrollments (
+    RollNo INT,
+    CourseID INT,
+    PRIMARY KEY (RollNo, CourseID)
+);
+</pre>
+
+<hr>
+
+<h2>4. FOREIGN KEY Constraint</h2>
+
+<p>
+Creates a relationship between two tables.
+It links one table to another using a key.
+</p>
+
+<h3>Syntax:</h3>
+
+<pre>
+CREATE TABLE Courses (
+    CourseID INT PRIMARY KEY,
+    CourseName VARCHAR(50)
+);
+
+CREATE TABLE Enrollments (
+    RollNo INT,
+    CourseID INT,
+    FOREIGN KEY (CourseID) REFERENCES Courses(CourseID)
+);
+</pre>
+
+<h3>Example:</h3>
+
+<pre>
+INSERT INTO Courses VALUES (1, 'DBMS');
+
+INSERT INTO Enrollments VALUES (101, 1);  -- Valid
+INSERT INTO Enrollments VALUES (102, 5);  -- Error (CourseID 5 does not exist)
+</pre>
+
+<hr>
+
+<h2>5. CHECK Constraint</h2>
+
+<p>
+Ensures that values satisfy a specific condition.
+</p>
+
+<h3>Syntax:</h3>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT,
+    Marks INT CHECK (Marks >= 0 AND Marks <= 100)
+);
+</pre>
+
+<h3>Example:</h3>
+
+<pre>
+INSERT INTO Students VALUES (101, 85);   -- Valid
+INSERT INTO Students VALUES (102, 120);  -- Error
+</pre>
+
+<hr>
+
+<h2>6. DEFAULT Constraint</h2>
+
+<p>
+Assigns a default value if no value is specified.
+</p>
+
+<h3>Syntax:</h3>
+
+<pre>
+CREATE TABLE Employees (
+    EmpID INT,
+    Status VARCHAR(20) DEFAULT 'Active'
+);
+</pre>
+
+<h3>Example:</h3>
+
+<pre>
+INSERT INTO Employees (EmpID) VALUES (1);
+
+SELECT * FROM Employees;
+-- Status will automatically be 'Active'
+</pre>
+
+<hr>
+
+<h2>Difference Between PRIMARY KEY and UNIQUE</h2>
+
+<table>
+<tr>
+<th>Feature</th>
+<th>PRIMARY KEY</th>
+<th>UNIQUE</th>
+</tr>
+<tr>
+<td>Uniqueness</td>
+<td>Must be unique</td>
+<td>Must be unique</td>
+</tr>
+<tr>
+<td>NULL Values</td>
+<td>Cannot contain NULL</td>
+<td>Can allow one NULL (DBMS dependent)</td>
+</tr>
+<tr>
+<td>Number per Table</td>
+<td>Only one primary key</td>
+<td>Multiple UNIQUE allowed</td>
+</tr>
+<tr>
+<td>Purpose</td>
+<td>Main identifier</td>
+<td>Alternate unique field</td>
+</tr>
+<tr>
+<td>Used in Relationships</td>
+<td>Referenced by Foreign Key</td>
+<td>Generally not used for relationships</td>
+</tr>
+</table>
+
+<hr>
+
+<h2>Complete Example Using All Constraints</h2>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) UNIQUE,
+    Age INT CHECK (Age >= 18),
+    Status VARCHAR(20) DEFAULT 'Active'
+);
+
+CREATE TABLE Marks (
+    RollNo INT,
+    Subject VARCHAR(50),
+    Score INT CHECK (Score BETWEEN 0 AND 100),
+    PRIMARY KEY (RollNo, Subject),
+    FOREIGN KEY (RollNo) REFERENCES Students(RollNo)
+);
+</pre>
+
+<hr>
+
+<div class="navigation">
+<a href="sql-commands.html" class="nav-btn">← Previous → SQL Commands</a>
+<a href="chapter6-operators.html" class="nav-btn">Next → Operators</a>
+</div>
+
+</div>
+
+</body>
+</html>

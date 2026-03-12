@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 3 - SQL</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1000px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+code{
+    background:#f1f1f1;
+    padding:4px 6px;
+    border-radius:4px;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 3: SQL (Structured Query Language)</h1>
+
+<hr>
+
+<h2>1. What is SQL?</h2>
+
+<p>
+<b>SQL (Structured Query Language)</b> is a standard programming language used to communicate with relational databases.
+</p>
+
+<p>
+It is used to create, retrieve, update, and delete data from a database.
+</p>
+
+<div class="note">
+Database stores data.  
+DBMS manages data.  
+SQL is the language used to interact with the DBMS.
+</div>
+
+<h3>Simple Definition:</h3>
+<p>
+SQL is a language used to talk to a database.
+</p>
+
+<hr>
+
+<h2>2. Why SQL is Needed?</h2>
+
+<p>
+Without SQL, we cannot properly interact with relational databases.
+</p>
+
+<h3>SQL is needed for:</h3>
+
+<ul>
+<li>Creating databases and tables</li>
+<li>Inserting data</li>
+<li>Retrieving data</li>
+<li>Updating records</li>
+<li>Deleting records</li>
+<li>Managing users and permissions</li>
+<li>Performing calculations on data</li>
+</ul>
+
+<h3>Example Problem:</h3>
+
+<p>
+Suppose you want to find students who scored more than 80 marks.
+Without SQL, it would be very difficult.
+With SQL:
+</p>
+
+<pre>
+SELECT Name, Marks
+FROM Students
+WHERE Marks > 80;
+</pre>
+
+<hr>
+
+<h2>3. History of SQL</h2>
+
+<ul>
+<li>1970 – Relational model proposed by E. F. Codd at IBM.</li>
+<li>1974 – SQL was developed by IBM (initially called SEQUEL).</li>
+<li>1986 – SQL became ANSI standard.</li>
+<li>1987 – SQL became ISO standard.</li>
+<li>Later versions – SQL-92, SQL:1999, SQL:2003, SQL:2011 etc.</li>
+</ul>
+
+<div class="note">
+SQL was originally called SEQUEL (Structured English Query Language).
+</div>
+
+<hr>
+
+<h2>4. Features of SQL</h2>
+
+<h3>1. Simple and Easy to Learn</h3>
+<p>Uses English-like commands.</p>
+
+<h3>2. Standard Language</h3>
+<p>Used worldwide with relational databases.</p>
+
+<h3>3. Portable</h3>
+<p>Works with MySQL, Oracle, SQL Server, PostgreSQL etc.</p>
+
+<h3>4. Supports Multiple Operations</h3>
+<ul>
+<li>DDL – Data Definition Language</li>
+<li>DML – Data Manipulation Language</li>
+<li>DCL – Data Control Language</li>
+<li>TCL – Transaction Control Language</li>
+</ul>
+
+<h3>5. High Performance</h3>
+<p>Can handle large volumes of data efficiently.</p>
+
+<hr>
+
+<h2>5. SQL Standards</h2>
+
+<p>
+SQL follows international standards defined by:
+</p>
+
+<ul>
+<li>ANSI (American National Standards Institute)</li>
+<li>ISO (International Organization for Standardization)</li>
+</ul>
+
+<h3>Major SQL Standard Versions:</h3>
+
+<table>
+<tr>
+<th>Version</th>
+<th>Year</th>
+<th>Features</th>
+</tr>
+<tr>
+<td>SQL-86</td>
+<td>1986</td>
+<td>First Standard</td>
+</tr>
+<tr>
+<td>SQL-92</td>
+<td>1992</td>
+<td>Improved Queries</td>
+</tr>
+<tr>
+<td>SQL:1999</td>
+<td>1999</td>
+<td>Triggers, Stored Procedures</td>
+</tr>
+<tr>
+<td>SQL:2003</td>
+<td>2003</td>
+<td>XML Support</td>
+</tr>
+<tr>
+<td>SQL:2011</td>
+<td>2011</td>
+<td>Enhanced Features</td>
+</tr>
+</table>
+
+<hr>
+
+<h2>6. Where SQL is Used?</h2>
+
+<h3>1. Banking Systems</h3>
+<p>Account management and transactions.</p>
+
+<h3>2. E-commerce Websites</h3>
+<p>Product catalog, orders, customers.</p>
+
+<h3>3. College Management Systems</h3>
+<p>Student records, marks, attendance.</p>
+
+<h3>4. Social Media Platforms</h3>
+<p>User data, posts, comments.</p>
+
+<h3>5. Government Systems</h3>
+<p>Citizen records, taxation systems.</p>
+
+<hr>
+
+<h2>Simple SQL Query Example</h2>
+
+<pre>
+-- Step 1: Create Table
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks INT
+);
+
+-- Step 2: Insert Data
+INSERT INTO Students VALUES (101, 'Rahul', 85);
+INSERT INTO Students VALUES (102, 'Priya', 90);
+INSERT INTO Students VALUES (103, 'Amit', 75);
+
+-- Step 3: Retrieve Data
+SELECT * FROM Students;
+
+-- Step 4: Retrieve Students with Marks > 80
+SELECT Name, Marks
+FROM Students
+WHERE Marks > 80;
+</pre>
+
+<p>
+This example shows how SQL creates, inserts, and retrieves data.
+</p>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter2-dbms.html" class="nav-btn">← Previous → DBMS</a>
+<a href="sql-commands.html" class="nav-btn">Next → SQL Commands</a>
+</div>
+
+</div>
+
+</body>
+</html>

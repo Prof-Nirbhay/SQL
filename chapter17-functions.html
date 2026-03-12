@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 17 - SQL Functions</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 17: SQL User Defined Functions</h1>
+
+<hr>
+
+<h2>What is a User Defined Function (UDF)?</h2>
+
+<p>
+A <b>User Defined Function (UDF)</b> is a function created by the user in SQL to perform a specific task.  
+It accepts input parameters, processes them, and returns a value.
+</p>
+
+<div class="note">
+Unlike stored procedures, SQL functions must return a value.
+</div>
+
+<p>
+Functions help in simplifying complex queries and reusing logic multiple times.
+</p>
+
+<hr>
+
+<h2>Types of User Defined Functions</h2>
+
+<table>
+
+<tr>
+<th>Type</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Scalar Function</td>
+<td>Returns a single value</td>
+</tr>
+
+<tr>
+<td>Table Valued Function</td>
+<td>Returns a table</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>1. Scalar Function</h2>
+
+<p>
+A <b>Scalar Function</b> returns a single value such as number, string, or date.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE FUNCTION function_name (@parameter datatype)
+RETURNS datatype
+AS
+BEGIN
+    DECLARE @result datatype
+
+    -- SQL logic here
+
+    RETURN @result
+END
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+CREATE FUNCTION GetBonus (@salary INT)
+RETURNS INT
+AS
+BEGIN
+    RETURN @salary * 10 / 100
+END
+</pre>
+
+<h3>Using the Function</h3>
+
+<pre>
+SELECT Name, Salary,
+dbo.GetBonus(Salary) AS Bonus
+FROM Employees;
+</pre>
+
+<p>
+This function calculates a 10% bonus for each employee.
+</p>
+
+<hr>
+
+<h2>2. Table Valued Function</h2>
+
+<p>
+A <b>Table Valued Function</b> returns a table as a result.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE FUNCTION function_name(@parameter datatype)
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT columns
+    FROM table
+    WHERE condition
+)
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+CREATE FUNCTION GetEmployeesByDept(@Dept VARCHAR(50))
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT *
+    FROM Employees
+    WHERE Department = @Dept
+)
+</pre>
+
+<h3>Using the Function</h3>
+
+<pre>
+SELECT * 
+FROM dbo.GetEmployeesByDept('IT');
+</pre>
+
+<p>
+This function returns all employees belonging to a particular department.
+</p>
+
+<hr>
+
+<h2>Difference Between Stored Procedure and Function</h2>
+
+<table>
+
+<tr>
+<th>Feature</th>
+<th>Stored Procedure</th>
+<th>Function</th>
+</tr>
+
+<tr>
+<td>Return Value</td>
+<td>May or may not return value</td>
+<td>Must return value</td>
+</tr>
+
+<tr>
+<td>Usage</td>
+<td>Executed using EXEC</td>
+<td>Used inside SQL queries</td>
+</tr>
+
+<tr>
+<td>Result</td>
+<td>Can return multiple outputs</td>
+<td>Returns single value or table</td>
+</tr>
+
+<tr>
+<td>Data Modification</td>
+<td>Can modify database data</td>
+<td>Usually used for calculation</td>
+</tr>
+
+<tr>
+<td>Calling Method</td>
+<td>EXEC procedure_name</td>
+<td>SELECT function_name()</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Example Comparison</h2>
+
+<h3>Stored Procedure</h3>
+
+<pre>
+EXEC GetEmployees;
+</pre>
+
+<h3>Function</h3>
+
+<pre>
+SELECT dbo.GetBonus(50000);
+</pre>
+
+<p>
+The stored procedure executes tasks, while the function returns a value inside a query.
+</p>
+
+<hr>
+
+<h2>Advantages of SQL Functions</h2>
+
+<table>
+
+<tr>
+<th>Advantage</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Code Reusability</td>
+<td>Functions can be reused in multiple queries</td>
+</tr>
+
+<tr>
+<td>Cleaner Queries</td>
+<td>Complex calculations can be simplified</td>
+</tr>
+
+<tr>
+<td>Modular Programming</td>
+<td>Logic can be separated into small reusable functions</td>
+</tr>
+
+<tr>
+<td>Better Maintenance</td>
+<td>Logic changes only in one place</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter16-stored-procedure.html" class="nav-btn">← Previous → Stored Procedure</a>
+<a href="chapter18-advanced-sql.html" class="nav-btn">Next → Advanced SQL</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 18 - Advanced SQL</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 18: Advanced SQL Concepts</h1>
+
+<hr>
+
+<h2>1. Indexing</h2>
+
+<p>
+An <b>Index</b> is a database object that improves the speed of data retrieval operations on a table.
+It works similar to the index of a book, allowing the database to find rows quickly.
+</p>
+
+<h3>Advantages</h3>
+
+<ul>
+<li>Faster query performance</li>
+<li>Efficient searching</li>
+<li>Improved sorting and filtering</li>
+</ul>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE INDEX index_name
+ON table_name(column_name);
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+CREATE INDEX idx_employee_name
+ON Employees(Name);
+</pre>
+
+<hr>
+
+<h2>2. Normalization</h2>
+
+<p>
+Normalization is the process of organizing data in a database to reduce redundancy and improve data integrity.
+</p>
+
+<h3>Main Normal Forms</h3>
+
+<table>
+
+<tr>
+<th>Normal Form</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>1NF</td>
+<td>Remove repeating groups and ensure atomic values</td>
+</tr>
+
+<tr>
+<td>2NF</td>
+<td>Remove partial dependency</td>
+</tr>
+
+<tr>
+<td>3NF</td>
+<td>Remove transitive dependency</td>
+</tr>
+
+</table>
+
+<h3>Example</h3>
+
+<p>
+Instead of storing department information repeatedly in the Students table, create a separate Department table.
+</p>
+
+<hr>
+
+<h2>3. Transactions</h2>
+
+<p>
+A <b>Transaction</b> is a sequence of SQL operations executed as a single logical unit.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+BEGIN TRANSACTION;
+
+UPDATE Accounts
+SET Balance = Balance - 500
+WHERE AccountID = 1;
+
+UPDATE Accounts
+SET Balance = Balance + 500
+WHERE AccountID = 2;
+
+COMMIT;
+</pre>
+
+<p>
+If any step fails, the transaction can be rolled back.
+</p>
+
+<hr>
+
+<h2>4. ACID Properties</h2>
+
+<p>
+ACID properties ensure reliable database transactions.
+</p>
+
+<table>
+
+<tr>
+<th>Property</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Atomicity</td>
+<td>All operations succeed or none</td>
+</tr>
+
+<tr>
+<td>Consistency</td>
+<td>Database remains in valid state</td>
+</tr>
+
+<tr>
+<td>Isolation</td>
+<td>Transactions do not interfere</td>
+</tr>
+
+<tr>
+<td>Durability</td>
+<td>Changes persist even after system crash</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>5. Triggers</h2>
+
+<p>
+A <b>Trigger</b> is a special type of stored procedure that automatically executes when a specific event occurs.
+</p>
+
+<h3>Example Events</h3>
+
+<ul>
+<li>INSERT</li>
+<li>UPDATE</li>
+<li>DELETE</li>
+</ul>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE TRIGGER trigger_name
+AFTER INSERT
+ON Employees
+FOR EACH ROW
+BEGIN
+    INSERT INTO AuditLog VALUES ('Employee inserted');
+END;
+</pre>
+
+<hr>
+
+<h2>6. Execution Plan</h2>
+
+<p>
+An <b>Execution Plan</b> shows how the database engine executes a SQL query.
+It helps developers understand query performance and identify slow operations.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+EXPLAIN SELECT * FROM Employees WHERE Salary > 50000;
+</pre>
+
+<p>
+This command shows how the database searches tables and uses indexes.
+</p>
+
+<hr>
+
+<h2>7. SQL Optimization</h2>
+
+<p>
+SQL optimization improves query performance and reduces execution time.
+</p>
+
+<h3>Best Practices</h3>
+
+<ul>
+<li>Use indexes wisely</li>
+<li>Avoid SELECT *</li>
+<li>Use proper WHERE conditions</li>
+<li>Use joins instead of subqueries when possible</li>
+<li>Limit result sets using LIMIT</li>
+</ul>
+
+<hr>
+
+<h2>8. SQL Injection Basics</h2>
+
+<p>
+SQL Injection is a security vulnerability where attackers manipulate SQL queries by injecting malicious code.
+</p>
+
+<h3>Example Vulnerable Query</h3>
+
+<pre>
+SELECT * FROM Users
+WHERE username = 'user'
+AND password = 'password';
+</pre>
+
+<h3>Injected Input</h3>
+
+<pre>
+' OR '1'='1
+</pre>
+
+<p>
+This can bypass authentication and allow unauthorized access.
+</p>
+
+<h3>Prevention Techniques</h3>
+
+<ul>
+<li>Use prepared statements</li>
+<li>Validate user inputs</li>
+<li>Use parameterized queries</li>
+<li>Apply least privilege database access</li>
+</ul>
+
+<hr>
+
+<h2>Summary</h2>
+
+<table>
+
+<tr>
+<th>Concept</th>
+<th>Purpose</th>
+</tr>
+
+<tr>
+<td>Index</td>
+<td>Improve query speed</td>
+</tr>
+
+<tr>
+<td>Normalization</td>
+<td>Reduce redundancy</td>
+</tr>
+
+<tr>
+<td>Transactions</td>
+<td>Ensure reliable operations</td>
+</tr>
+
+<tr>
+<td>ACID</td>
+<td>Guarantee data integrity</td>
+</tr>
+
+<tr>
+<td>Triggers</td>
+<td>Automatic database actions</td>
+</tr>
+
+<tr>
+<td>Execution Plan</td>
+<td>Analyze query performance</td>
+</tr>
+
+<tr>
+<td>Optimization</td>
+<td>Improve efficiency</td>
+</tr>
+
+<tr>
+<td>SQL Injection</td>
+<td>Security vulnerability awareness</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter17-function.html" class="nav-btn">← Previous → SQL Functions</a>
+<a class="nav-btn">End of Course</a>
+</div>
+
+</div>
+
+</body>
+</html>

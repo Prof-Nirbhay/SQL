@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 1 - Database</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1000px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+code{
+    background:#f1f1f1;
+    padding:4px 6px;
+    border-radius:4px;
+    font-family: monospace;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn.disabled{
+    background:gray;
+    pointer-events:none;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 1: Database</h1>
+
+<hr>
+
+<h2>1. What is Data?</h2>
+
+<p>
+Data is raw facts and figures that have no meaning on their own.
+It can be numbers, text, images, audio, or video.
+</p>
+
+<h3>Examples of Data:</h3>
+<ul>
+<li>101</li>
+<li>Nirbhay</li>
+<li>85%</li>
+<li>9876543210</li>
+<li>01/01/2026</li>
+</ul>
+
+<div class="note">
+Data becomes useful only after processing.  
+For example: 85 is data.  
+"Student scored 85 marks in DBMS" is information.
+</div>
+
+<h3>Example in Table Form (Raw Data)</h3>
+
+<table>
+<tr>
+<th>Roll No</th>
+<th>Name</th>
+<th>Marks</th>
+</tr>
+<tr>
+<td>101</td>
+<td>Rahul</td>
+<td>85</td>
+</tr>
+<tr>
+<td>102</td>
+<td>Priya</td>
+<td>90</td>
+</tr>
+</table>
+
+<hr>
+
+<h2>2. What is a Database?</h2>
+
+<p>
+A <b>Database</b> is an organized collection of related data stored in a structured format so that it can be easily accessed, managed, and updated.
+</p>
+
+<p>
+A database stores data in tables (rows and columns).
+</p>
+
+<h3>Simple Definition:</h3>
+<p>
+Database = Organized Collection of Related Data
+</p>
+
+<h3>Example:</h3>
+
+<p>
+In a college:
+</p>
+
+<ul>
+<li>Student Records</li>
+<li>Faculty Details</li>
+<li>Course Information</li>
+<li>Exam Results</li>
+</ul>
+
+All these together form a College Database.
+
+<h3>SQL Example:</h3>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks INT
+);
+
+INSERT INTO Students VALUES (101, 'Rahul', 85);
+INSERT INTO Students VALUES (102, 'Priya', 90);
+
+SELECT * FROM Students;
+</pre>
+
+<hr>
+
+<h2>3. Characteristics of Database</h2>
+
+<h3>1. Organized Structure</h3>
+<p>Data is stored in tables with rows and columns.</p>
+
+<h3>2. Data Integrity</h3>
+<p>Ensures data is accurate and consistent.</p>
+
+<h3>3. Data Security</h3>
+<p>Only authorized users can access data.</p>
+
+<h3>4. Reduced Redundancy</h3>
+<p>Duplicate data is minimized.</p>
+
+<h3>5. Data Sharing</h3>
+<p>Multiple users can access data simultaneously.</p>
+
+<h3>6. Backup and Recovery</h3>
+<p>Data can be recovered in case of failure.</p>
+
+<hr>
+
+<h2>4. Types of Database</h2>
+
+<h3>1. Relational Database (RDBMS)</h3>
+<p>
+Stores data in tables.
+Uses SQL.
+</p>
+
+<p><b>Example:</b> MySQL, Oracle</p>
+
+<h3>2. NoSQL Database</h3>
+<p>
+Stores data in JSON, key-value, document form.
+</p>
+
+<p><b>Example:</b> MongoDB</p>
+
+<h3>3. Centralized Database</h3>
+<p>Stored in one central location.</p>
+
+<h3>4. Distributed Database</h3>
+<p>Stored across multiple locations.</p>
+
+<hr>
+
+<h2>5. Real World Examples of Databases</h2>
+
+<ul>
+<li>Banking System – Customer accounts, transactions</li>
+<li>Hospital Management – Patient records</li>
+<li>Library System – Books and members</li>
+<li>E-commerce – Products, Orders, Customers</li>
+<li>College ERP System – Students, Marks, Attendance</li>
+</ul>
+
+<hr>
+
+<h2>6. File System vs Database</h2>
+
+<table>
+<tr>
+<th>File System</th>
+<th>Database System</th>
+</tr>
+<tr>
+<td>Data stored in separate files</td>
+<td>Data stored in structured tables</td>
+</tr>
+<tr>
+<td>High redundancy</td>
+<td>Reduced redundancy</td>
+</tr>
+<tr>
+<td>No proper security</td>
+<td>Strong security</td>
+</tr>
+<tr>
+<td>Difficult data retrieval</td>
+<td>Easy data retrieval using SQL</td>
+</tr>
+<tr>
+<td>No relationships</td>
+<td>Supports relationships (Primary Key, Foreign Key)</td>
+</tr>
+</table>
+
+<h3>File System Example:</h3>
+
+<p>
+student.txt  
+marks.txt  
+fees.txt  
+</p>
+
+<p>Each file is separate → data duplication possible.</p>
+
+<h3>Database Example:</h3>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50)
+);
+
+CREATE TABLE Marks (
+    RollNo INT,
+    Subject VARCHAR(50),
+    Marks INT,
+    FOREIGN KEY (RollNo) REFERENCES Students(RollNo)
+);
+</pre>
+
+<p>
+Here, relationships reduce duplication.
+</p>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter2-dbms.html" class="nav-btn">Next → DBMS</a>
+</div>
+
+</div>
+
+</body>
+</html>

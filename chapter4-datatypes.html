@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 4 - SQL Data Types</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 4: SQL Data Types</h1>
+
+<hr>
+
+<h2>What are SQL Data Types?</h2>
+
+<p>
+SQL Data Types define what kind of data can be stored in a column of a table.
+Choosing the correct data type improves performance and saves storage.
+</p>
+
+<div class="note">
+Each column in a table must have a defined data type.
+</div>
+
+<hr>
+
+<h2>1. Numeric Data Types</h2>
+
+<p>Used to store numbers.</p>
+
+<h3>1. INT (Integer)</h3>
+<p>Stores whole numbers.</p>
+
+<pre>
+CREATE TABLE Students (
+    RollNo INT,
+    Marks INT
+);
+</pre>
+
+<h3>2. SMALLINT</h3>
+<p>Stores small range integers.</p>
+
+<pre>
+CREATE TABLE AgeData (
+    Age SMALLINT
+);
+</pre>
+
+<h3>3. BIGINT</h3>
+<p>Stores very large integers.</p>
+
+<pre>
+CREATE TABLE Population (
+    Total BIGINT
+);
+</pre>
+
+<h3>4. DECIMAL(p,s)</h3>
+<p>Stores exact numeric values with precision and scale.</p>
+
+<pre>
+CREATE TABLE SalaryData (
+    Salary DECIMAL(10,2)
+);
+</pre>
+
+<h3>5. FLOAT</h3>
+<p>Stores approximate decimal numbers.</p>
+
+<pre>
+CREATE TABLE Measurements (
+    Temperature FLOAT
+);
+</pre>
+
+<hr>
+
+<h2>2. Character / String Data Types</h2>
+
+<h3>1. CHAR(n)</h3>
+<p>Fixed length string.</p>
+
+<pre>
+CREATE TABLE Country (
+    Code CHAR(3)
+);
+</pre>
+
+<h3>2. VARCHAR(n)</h3>
+<p>Variable length string.</p>
+
+<pre>
+CREATE TABLE Students (
+    Name VARCHAR(50)
+);
+</pre>
+
+<h3>3. TEXT</h3>
+<p>Stores large text data.</p>
+
+<pre>
+CREATE TABLE Articles (
+    Content TEXT
+);
+</pre>
+
+<hr>
+
+<h2>3. Date and Time Data Types</h2>
+
+<h3>1. DATE</h3>
+<p>Stores date (YYYY-MM-DD).</p>
+
+<pre>
+CREATE TABLE Events (
+    EventDate DATE
+);
+</pre>
+
+<h3>2. TIME</h3>
+<p>Stores time (HH:MM:SS).</p>
+
+<pre>
+CREATE TABLE Schedule (
+    StartTime TIME
+);
+</pre>
+
+<h3>3. DATETIME</h3>
+<p>Stores both date and time.</p>
+
+<pre>
+CREATE TABLE Orders (
+    OrderDate DATETIME
+);
+</pre>
+
+<h3>4. TIMESTAMP</h3>
+<p>Stores date and time with automatic update feature.</p>
+
+<pre>
+CREATE TABLE Logs (
+    CreatedAt TIMESTAMP
+);
+</pre>
+
+<hr>
+
+<h2>4. Boolean Data Type</h2>
+
+<h3>BOOLEAN / BOOL</h3>
+<p>Stores TRUE or FALSE values.</p>
+
+<pre>
+CREATE TABLE Users (
+    IsActive BOOLEAN
+);
+</pre>
+
+<hr>
+
+<h2>5. Binary Data Types</h2>
+
+<h3>1. BINARY(n)</h3>
+<p>Fixed length binary data.</p>
+
+<pre>
+CREATE TABLE EncryptionKeys (
+    KeyValue BINARY(16)
+);
+</pre>
+
+<h3>2. VARBINARY(n)</h3>
+<p>Variable length binary data.</p>
+
+<pre>
+CREATE TABLE Files (
+    FileData VARBINARY(255)
+);
+</pre>
+
+<h3>3. BLOB</h3>
+<p>Stores large binary objects like images or videos.</p>
+
+<pre>
+CREATE TABLE Images (
+    Photo BLOB
+);
+</pre>
+
+<hr>
+
+<h2>Complete Example Table Using Multiple Data Types</h2>
+
+<pre>
+CREATE TABLE Employees (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Age SMALLINT,
+    Salary DECIMAL(10,2),
+    JoiningDate DATE,
+    LoginTime TIME,
+    IsActive BOOLEAN,
+    ProfileImage BLOB
+);
+</pre>
+
+<hr>
+
+<h2>Comparison Table of SQL Data Types</h2>
+
+<table>
+<tr>
+<th>Category</th>
+<th>Data Type</th>
+<th>Used For</th>
+<th>Example</th>
+</tr>
+<tr>
+<td>Numeric</td>
+<td>INT</td>
+<td>Whole numbers</td>
+<td>100</td>
+</tr>
+<tr>
+<td>Numeric</td>
+<td>DECIMAL</td>
+<td>Exact decimal values</td>
+<td>9999.99</td>
+</tr>
+<tr>
+<td>String</td>
+<td>VARCHAR</td>
+<td>Variable text</td>
+<td>'Nirbhay'</td>
+</tr>
+<tr>
+<td>Date</td>
+<td>DATE</td>
+<td>Date only</td>
+<td>2026-02-27</td>
+</tr>
+<tr>
+<td>Boolean</td>
+<td>BOOLEAN</td>
+<td>True/False</td>
+<td>TRUE</td>
+</tr>
+<tr>
+<td>Binary</td>
+<td>BLOB</td>
+<td>Images/Files</td>
+<td>Binary Data</td>
+</tr>
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="sql-commands.html" class="nav-btn">← Previous → SQL</a>
+<a href="chapter5-constraints.html" class="nav-btn">Next → Constraints</a>
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 13 - View and CTE</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 13: SQL Views and Common Table Expressions (CTE)</h1>
+
+<hr>
+
+<h2>What is a View?</h2>
+
+<p>
+A <b>View</b> in SQL is a virtual table that is created using a SELECT query. 
+It does not store data itself; instead, it displays data from one or more tables.
+</p>
+
+<div class="note">
+A View acts like a saved SQL query that can be reused multiple times.
+</div>
+
+<h3>Example Base Table</h3>
+
+<table>
+
+<tr>
+<th>StudentID</th>
+<th>Name</th>
+<th>Marks</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Rahul</td>
+<td>85</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>92</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>75</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Advantages of Views</h2>
+
+<table>
+
+<tr>
+<th>Advantage</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Security</td>
+<td>Restrict access to specific columns or rows</td>
+</tr>
+
+<tr>
+<td>Simplicity</td>
+<td>Complex queries can be simplified</td>
+</tr>
+
+<tr>
+<td>Data Abstraction</td>
+<td>Hide internal database structure</td>
+</tr>
+
+<tr>
+<td>Reusability</td>
+<td>Reuse frequently used queries</td>
+</tr>
+
+<tr>
+<td>Consistency</td>
+<td>Ensure uniform data presentation</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Create a View</h2>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE VIEW view_name AS
+SELECT column1, column2
+FROM table_name
+WHERE condition;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+CREATE VIEW TopStudents AS
+SELECT Name, Marks
+FROM Students
+WHERE Marks > 80;
+</pre>
+
+<h3>Using the View</h3>
+
+<pre>
+SELECT * FROM TopStudents;
+</pre>
+
+<hr>
+
+<h2>Updating a View</h2>
+
+<p>
+If the view allows updates, you can modify data through it.
+Changes will affect the original table.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+UPDATE TopStudents
+SET Marks = 95
+WHERE Name = 'Rahul';
+</pre>
+
+<hr>
+
+<h2>Modify (Alter) a View</h2>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE OR REPLACE VIEW TopStudents AS
+SELECT Name, Marks
+FROM Students
+WHERE Marks > 85;
+</pre>
+
+<hr>
+
+<h2>Drop a View</h2>
+
+<h3>Syntax</h3>
+
+<pre>
+DROP VIEW TopStudents;
+</pre>
+
+<hr>
+
+<h2>What is a CTE (Common Table Expression)?</h2>
+
+<p>
+A <b>Common Table Expression (CTE)</b> is a temporary result set defined within a SQL query.
+It improves readability and simplifies complex queries.
+</p>
+
+<div class="note">
+CTE exists only during query execution and is not stored permanently in the database.
+</div>
+
+<h3>Basic Syntax</h3>
+
+<pre>
+WITH cte_name AS
+(
+SELECT column1, column2
+FROM table_name
+WHERE condition
+)
+
+SELECT * FROM cte_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+WITH HighMarks AS
+(
+SELECT Name, Marks
+FROM Students
+WHERE Marks > 80
+)
+
+SELECT * FROM HighMarks;
+</pre>
+
+<hr>
+
+<h2>Recursive CTE</h2>
+
+<p>
+A Recursive CTE is used to perform hierarchical or recursive queries such as 
+organizational charts or tree structures.
+</p>
+
+<h3>Structure of Recursive CTE</h3>
+
+<pre>
+WITH RecursiveCTE AS
+(
+-- Anchor Query
+SELECT column1
+FROM table
+
+UNION ALL
+
+-- Recursive Query
+SELECT column1
+FROM table
+JOIN RecursiveCTE
+ON condition
+)
+
+SELECT * FROM RecursiveCTE;
+</pre>
+
+<h3>Example: Employee Hierarchy</h3>
+
+<table>
+
+<tr>
+<th>EmployeeID</th>
+<th>Name</th>
+<th>ManagerID</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Raj</td>
+<td>NULL</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>2</td>
+</tr>
+
+</table>
+
+<h3>Recursive Query</h3>
+
+<pre>
+WITH EmployeeHierarchy AS
+(
+SELECT EmployeeID, Name, ManagerID
+FROM Employees
+WHERE ManagerID IS NULL
+
+UNION ALL
+
+SELECT e.EmployeeID, e.Name, e.ManagerID
+FROM Employees e
+JOIN EmployeeHierarchy eh
+ON e.ManagerID = eh.EmployeeID
+)
+
+SELECT * FROM EmployeeHierarchy;
+</pre>
+
+<p>
+This query retrieves the full hierarchy starting from the top-level manager.
+</p>
+
+<hr>
+
+<h2>View vs CTE</h2>
+
+<table>
+
+<tr>
+<th>Feature</th>
+<th>View</th>
+<th>CTE</th>
+</tr>
+
+<tr>
+<td>Storage</td>
+<td>Stored in database</td>
+<td>Temporary</td>
+</tr>
+
+<tr>
+<td>Reuse</td>
+<td>Reusable</td>
+<td>Only within query</td>
+</tr>
+
+<tr>
+<td>Performance</td>
+<td>Can improve query reuse</td>
+<td>Better readability</td>
+</tr>
+
+<tr>
+<td>Complex Queries</td>
+<td>Moderate</td>
+<td>Excellent</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter12-joins.html" class="nav-btn">← Previous → Joins</a>
+<a href="chapter14-window-functions.html" class="nav-btn">Next → Window Functions</a>
+</div>
+
+</div>
+
+</body>
+</html>

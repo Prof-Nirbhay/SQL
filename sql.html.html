@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>SQL Learning Course</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+display:flex;
+height:100vh;
+}
+
+/* Sidebar */
+
+.sidebar{
+width:260px;
+background:#2c3e50;
+color:white;
+overflow-y:auto;
+transition:0.3s;
+}
+
+.sidebar h2{
+padding:20px;
+border-bottom:1px solid #444;
+}
+
+.sidebar a{
+display:block;
+padding:10px 20px;
+color:white;
+text-decoration:none;
+font-size:14px;
+}
+
+.sidebar a:hover{
+background:#34495e;
+}
+
+/* Hide sidebar */
+
+.sidebar.hide{
+width:0;
+overflow:hidden;
+}
+
+/* Main content */
+
+.main{
+flex:1;
+display:flex;
+flex-direction:column;
+}
+
+/* Top bar */
+
+.topbar{
+background:#34495e;
+color:white;
+padding:10px;
+display:flex;
+align-items:center;
+}
+
+.menu-btn{
+background:#2ecc71;
+border:none;
+padding:8px 12px;
+cursor:pointer;
+color:white;
+margin-right:10px;
+}
+
+/* Chapter content */
+
+iframe{
+flex:1;
+border:none;
+width:100%;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div id="sidebar" class="sidebar">
+
+<h2>SQL Course</h2>
+
+<a href="chapter1-database.html" target="content">1 Database</a>
+<a href="chapter2-dbms.html" target="content">2 DBMS</a>
+<a href="chapter3-sql.html" target="content">3 SQL</a>
+<a href="chapter4-datatypes.html" target="content">4 Data Types</a>
+<a href="chapter5-constraints.html" target="content">5 Constraints</a>
+<a href="chapter6-operators.html" target="content">6 Operators</a>
+<a href="chapter7-types-of-sql.html" target="content">7 SQL Commands</a>
+<a href="chapter8-clauses.html" target="content">8 Clauses</a>
+<a href="chapter9-aggregate-functions.html" target="content">9 Aggregate Functions</a>
+<a href="chapter10-functions.html" target="content">10 SQL Functions</a>
+<a href="chapter11-subquery-derived.html" target="content">11 Subquery</a>
+<a href="chapter12-joins.html" target="content">12 Joins</a>
+<a href="chapter13-view-cte.html" target="content">13 View & CTE</a>
+<a href="chapter14-window-functions.html" target="content">14 Window Functions</a>
+<a href="chapter15-case.html" target="content">15 CASE</a>
+<a href="chapter16-stored-procedure.html" target="content">16 Stored Procedure</a>
+<a href="chapter17-function.html" target="content">17 Function</a>
+<a href="chapter18-advanced-sql.html" target="content">18 Advanced SQL</a>
+
+</div>
+
+<div class="main">
+
+<div class="topbar">
+
+<button class="menu-btn" onclick="toggleMenu()">☰ Menu</button>
+<h3>SQL Learning Platform</h3>
+
+</div>
+
+<iframe name="content" src="chapter1-database.html"></iframe>
+
+</div>
+
+<script>
+
+function toggleMenu(){
+document.getElementById("sidebar").classList.toggle("hide");
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 6 - SQL Operators</title>
+
+<style>
+body{
+    font-family: "Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    overflow-x:auto;
+    border-radius:6px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 6: SQL Operators</h1>
+
+<hr>
+
+<h2>What are SQL Operators?</h2>
+
+<p>
+SQL operators are special symbols or keywords used to perform operations on data.
+They are mainly used in the WHERE clause to filter records.
+</p>
+
+<div class="note">
+Operators help us apply conditions and calculations in SQL queries.
+</div>
+
+<hr>
+
+<h2>1. Arithmetic Operators</h2>
+
+<p>Used to perform mathematical calculations.</p>
+
+<table>
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>+</td><td>Addition</td></tr>
+<tr><td>-</td><td>Subtraction</td></tr>
+<tr><td>*</td><td>Multiplication</td></tr>
+<tr><td>/</td><td>Division</td></tr>
+<tr><td>%</td><td>Modulus</td></tr>
+</table>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT Name, Marks, Marks + 5 AS BonusMarks
+FROM Students;
+
+SELECT 10 * 5 AS Result;
+</pre>
+
+<hr>
+
+<h2>2. Comparison Operators</h2>
+
+<p>Used to compare two values.</p>
+
+<table>
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>=</td><td>Equal</td></tr>
+<tr><td>!= or &lt;&gt;</td><td>Not Equal</td></tr>
+<tr><td>&gt;</td><td>Greater Than</td></tr>
+<tr><td>&lt;</td><td>Less Than</td></tr>
+<tr><td>&gt;=</td><td>Greater Than or Equal</td></tr>
+<tr><td>&lt;=</td><td>Less Than or Equal</td></tr>
+</table>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT * FROM Students
+WHERE Marks >= 80;
+</pre>
+
+<hr>
+
+<h2>3. Logical Operators</h2>
+
+<p>Used to combine multiple conditions.</p>
+
+<table>
+<tr><th>Operator</th><th>Description</th></tr>
+<tr><td>AND</td><td>Both conditions must be true</td></tr>
+<tr><td>OR</td><td>At least one condition must be true</td></tr>
+<tr><td>NOT</td><td>Reverses the condition</td></tr>
+</table>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT * FROM Students
+WHERE Marks > 70 AND Age > 18;
+
+SELECT * FROM Students
+WHERE NOT Marks < 50;
+</pre>
+
+<hr>
+
+<h2>4. BETWEEN Operator</h2>
+
+<p>Used to filter values within a range (inclusive).</p>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT * FROM Students
+WHERE Marks BETWEEN 60 AND 90;
+</pre>
+
+<hr>
+
+<h2>5. IN Operator</h2>
+
+<p>Used to match values from a given list.</p>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT * FROM Students
+WHERE RollNo IN (101, 102, 105);
+</pre>
+
+<hr>
+
+<h2>6. LIKE Operator</h2>
+
+<p>Used for pattern matching in text.</p>
+
+<table>
+<tr><th>Symbol</th><th>Description</th></tr>
+<tr><td>%</td><td>Represents multiple characters</td></tr>
+<tr><td>_</td><td>Represents single character</td></tr>
+</table>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT * FROM Students
+WHERE Name LIKE 'R%';   -- Names starting with R
+
+SELECT * FROM Students
+WHERE Name LIKE '_a%';  -- Second letter is 'a'
+</pre>
+
+<hr>
+
+<h2>7. IS NULL Operator</h2>
+
+<p>Used to check NULL values.</p>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT * FROM Students
+WHERE Email IS NULL;
+
+SELECT * FROM Students
+WHERE Email IS NOT NULL;
+</pre>
+
+<hr>
+
+<h2>8. ANY Operator</h2>
+
+<p>
+Returns true if any value in the subquery satisfies the condition.
+</p>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT Name FROM Students
+WHERE Marks > ANY (SELECT Marks FROM Students WHERE Age > 20);
+</pre>
+
+<hr>
+
+<h2>9. ALL Operator</h2>
+
+<p>
+Returns true if the condition is true for all values in subquery.
+</p>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT Name FROM Students
+WHERE Marks > ALL (SELECT Marks FROM Students WHERE Age > 20);
+</pre>
+
+<hr>
+
+<h2>10. EXISTS Operator</h2>
+
+<p>
+Returns true if the subquery returns at least one record.
+</p>
+
+<h3>Example:</h3>
+
+<pre>
+SELECT Name
+FROM Students s
+WHERE EXISTS (
+    SELECT 1
+    FROM Marks m
+    WHERE m.RollNo = s.RollNo
+);
+</pre>
+
+<hr>
+
+<h2>Summary Table of Operators</h2>
+
+<table>
+<tr>
+<th>Category</th>
+<th>Operators</th>
+<th>Used For</th>
+</tr>
+<tr>
+<td>Arithmetic</td>
+<td>+, -, *, /, %</td>
+<td>Calculations</td>
+</tr>
+<tr>
+<td>Comparison</td>
+<td>=, !=, >, <, >=, <=</td>
+<td>Value comparison</td>
+</tr>
+<tr>
+<td>Logical</td>
+<td>AND, OR, NOT</td>
+<td>Combine conditions</td>
+</tr>
+<tr>
+<td>Range</td>
+<td>BETWEEN</td>
+<td>Range filtering</td>
+</tr>
+<tr>
+<td>List</td>
+<td>IN</td>
+<td>Match from list</td>
+</tr>
+<tr>
+<td>Pattern</td>
+<td>LIKE</td>
+<td>Text search</td>
+</tr>
+<tr>
+<td>Null Check</td>
+<td>IS NULL</td>
+<td>Check NULL</td>
+</tr>
+<tr>
+<td>Subquery</td>
+<td>ANY, ALL, EXISTS</td>
+<td>Advanced filtering</td>
+</tr>
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter5-constraints.html" class="nav-btn">← Previous → Constraints</a>
+<a href="chapter7-types-of-sql.html" class="nav-btn">Next → SQL Commands</a>
+</div>
+
+</div>
+
+</body>
+</html>

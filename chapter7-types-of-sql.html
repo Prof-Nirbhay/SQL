@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 7 - Types of SQL Commands</title>
+
+<style>
+body{
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    border-radius:6px;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 7: Types of SQL Commands</h1>
+
+<hr>
+
+<h2>Introduction</h2>
+
+<p>
+SQL commands are categorized into different types depending on their functionality.
+These categories help in organizing database operations efficiently.
+</p>
+
+<div class="note">
+Major Types of SQL Commands:
+<ul>
+<li>DDL – Data Definition Language</li>
+<li>DML – Data Manipulation Language</li>
+<li>DQL – Data Query Language</li>
+<li>DCL – Data Control Language</li>
+<li>TCL – Transaction Control Language</li>
+</ul>
+</div>
+
+<hr>
+
+<h2>1. DDL – Data Definition Language</h2>
+
+<p>
+DDL commands are used to define and modify the structure of database objects such as tables, schemas, and indexes.
+</p>
+
+<h3>Common DDL Commands</h3>
+
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td>CREATE</td><td>Create database or table</td></tr>
+<tr><td>ALTER</td><td>Modify table structure</td></tr>
+<tr><td>DROP</td><td>Delete table or database</td></tr>
+<tr><td>TRUNCATE</td><td>Remove all records from a table</td></tr>
+<tr><td>RENAME</td><td>Rename database object</td></tr>
+</table>
+
+<h3>Example</h3>
+
+<pre>
+-- Create Table
+CREATE TABLE Students (
+    RollNo INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Marks INT
+);
+
+-- Modify Table
+ALTER TABLE Students ADD Email VARCHAR(100);
+
+-- Rename Table
+RENAME TABLE Students TO StudentRecords;
+
+-- Delete Table
+DROP TABLE StudentRecords;
+</pre>
+
+<hr>
+
+<h2>2. DML – Data Manipulation Language</h2>
+
+<p>
+DML commands are used to insert, modify, and delete records inside tables.
+</p>
+
+<h3>Common DML Commands</h3>
+
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td>INSERT</td><td>Add new records</td></tr>
+<tr><td>UPDATE</td><td>Modify existing records</td></tr>
+<tr><td>DELETE</td><td>Remove records</td></tr>
+</table>
+
+<h3>Examples</h3>
+
+<pre>
+-- Insert Record
+INSERT INTO Students VALUES (101, 'Rahul', 85);
+
+-- Update Record
+UPDATE Students
+SET Marks = 90
+WHERE RollNo = 101;
+
+-- Delete Record
+DELETE FROM Students
+WHERE RollNo = 101;
+</pre>
+
+<hr>
+
+<h2>3. DQL – Data Query Language</h2>
+
+<p>
+DQL commands are used to retrieve data from the database.
+The primary command used in DQL is SELECT.
+</p>
+
+<h3>SELECT Syntax</h3>
+
+<pre>
+SELECT column1, column2
+FROM table_name
+WHERE condition;
+</pre>
+
+<h3>Examples</h3>
+
+<pre>
+-- Retrieve All Data
+SELECT * FROM Students;
+
+-- Retrieve Specific Columns
+SELECT Name, Marks FROM Students;
+
+-- Retrieve Data with Condition
+SELECT * FROM Students
+WHERE Marks > 80;
+</pre>
+
+<hr>
+
+<h2>4. DCL – Data Control Language</h2>
+
+<p>
+DCL commands are used to control access and permissions in the database.
+These commands are mostly used by database administrators.
+</p>
+
+<h3>Common Commands</h3>
+
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td>GRANT</td><td>Provide user access</td></tr>
+<tr><td>REVOKE</td><td>Remove user access</td></tr>
+</table>
+
+<h3>Example</h3>
+
+<pre>
+-- Give permission
+GRANT SELECT ON Students TO user1;
+
+-- Remove permission
+REVOKE SELECT ON Students FROM user1;
+</pre>
+
+<hr>
+
+<h2>5. TCL – Transaction Control Language</h2>
+
+<p>
+TCL commands manage database transactions.
+A transaction is a group of SQL statements executed together.
+</p>
+
+<h3>Common Commands</h3>
+
+<table>
+<tr><th>Command</th><th>Description</th></tr>
+<tr><td>COMMIT</td><td>Save changes permanently</td></tr>
+<tr><td>ROLLBACK</td><td>Undo changes</td></tr>
+<tr><td>SAVEPOINT</td><td>Create rollback point</td></tr>
+</table>
+
+<h3>Example</h3>
+
+<pre>
+INSERT INTO Students VALUES (102, 'Priya', 88);
+
+SAVEPOINT A;
+
+UPDATE Students
+SET Marks = 95
+WHERE RollNo = 102;
+
+ROLLBACK TO A;
+
+COMMIT;
+</pre>
+
+<hr>
+
+<h2>Comparison of SQL Command Types</h2>
+
+<table>
+<tr>
+<th>Type</th>
+<th>Purpose</th>
+<th>Commands</th>
+</tr>
+
+<tr>
+<td>DDL</td>
+<td>Define database structure</td>
+<td>CREATE, ALTER, DROP</td>
+</tr>
+
+<tr>
+<td>DML</td>
+<td>Modify data</td>
+<td>INSERT, UPDATE, DELETE</td>
+</tr>
+
+<tr>
+<td>DQL</td>
+<td>Retrieve data</td>
+<td>SELECT</td>
+</tr>
+
+<tr>
+<td>DCL</td>
+<td>Control permissions</td>
+<td>GRANT, REVOKE</td>
+</tr>
+
+<tr>
+<td>TCL</td>
+<td>Manage transactions</td>
+<td>COMMIT, ROLLBACK, SAVEPOINT</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter6-operators.html" class="nav-btn">← Previous → Operators</a>
+<a href="chapter8-clauses.html" class="nav-btn">Next → Clauses</a>
+</div>
+
+</div>
+
+</body>
+</html>

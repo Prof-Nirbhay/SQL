@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 15 - CASE Statement</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 15: SQL CASE Statement</h1>
+
+<hr>
+
+<h2>What is CASE?</h2>
+
+<p>
+The <b>CASE</b> statement in SQL is used to perform conditional logic within a query. 
+It works similar to <b>IF-ELSE</b> statements in programming languages.
+</p>
+
+<div class="note">
+CASE allows you to return different values depending on conditions.
+</div>
+
+<hr>
+
+<h2>General Syntax of CASE</h2>
+
+<pre>
+CASE
+    WHEN condition1 THEN result1
+    WHEN condition2 THEN result2
+    ELSE result
+END
+</pre>
+
+<p>
+The CASE statement checks conditions sequentially and returns the first matching result.
+</p>
+
+<hr>
+
+<h2>Example Table: Students</h2>
+
+<table>
+
+<tr>
+<th>ID</th>
+<th>Name</th>
+<th>Marks</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Rahul</td>
+<td>85</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>92</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>65</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Neha</td>
+<td>40</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>1. Simple CASE</h2>
+
+<p>
+Simple CASE compares an expression with multiple values.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+CASE column_name
+    WHEN value1 THEN result1
+    WHEN value2 THEN result2
+    ELSE result
+END
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Marks,
+CASE Marks
+    WHEN 92 THEN 'Topper'
+    WHEN 85 THEN 'Excellent'
+    ELSE 'Other'
+END AS Result
+FROM Students;
+</pre>
+
+<p>
+This query checks the exact value of Marks and returns the corresponding label.
+</p>
+
+<hr>
+
+<h2>2. Searched CASE</h2>
+
+<p>
+Searched CASE evaluates multiple logical conditions instead of specific values.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+CASE
+    WHEN condition THEN result
+    WHEN condition THEN result
+    ELSE result
+END
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Marks,
+CASE
+    WHEN Marks >= 90 THEN 'A Grade'
+    WHEN Marks >= 75 THEN 'B Grade'
+    WHEN Marks >= 50 THEN 'C Grade'
+    ELSE 'Fail'
+END AS Grade
+FROM Students;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Marks</th>
+<th>Grade</th>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>85</td>
+<td>B Grade</td>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>92</td>
+<td>A Grade</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>65</td>
+<td>C Grade</td>
+</tr>
+
+<tr>
+<td>Neha</td>
+<td>40</td>
+<td>Fail</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>3. CASE inside SELECT</h2>
+
+<p>
+CASE is commonly used inside the SELECT clause to create calculated or categorized columns.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Salary,
+CASE
+    WHEN Salary >= 70000 THEN 'High Salary'
+    WHEN Salary >= 50000 THEN 'Medium Salary'
+    ELSE 'Low Salary'
+END AS SalaryCategory
+FROM Employees;
+</pre>
+
+<p>
+This query creates a new column called SalaryCategory based on salary ranges.
+</p>
+
+<hr>
+
+<h2>4. CASE inside ORDER BY</h2>
+
+<p>
+CASE can also control the sorting order of query results.
+</p>
+
+<h3>Example Table: Employees</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Department</th>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>IT</td>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>HR</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>Finance</td>
+</tr>
+
+</table>
+
+<h3>Query</h3>
+
+<pre>
+SELECT Name, Department
+FROM Employees
+ORDER BY
+CASE Department
+    WHEN 'IT' THEN 1
+    WHEN 'HR' THEN 2
+    WHEN 'Finance' THEN 3
+END;
+</pre>
+
+<p>
+This query sorts departments in a custom order instead of alphabetical order.
+</p>
+
+<hr>
+
+<h2>CASE with Aggregate Functions</h2>
+
+<p>
+CASE can be used with aggregate functions to perform conditional calculations.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT
+COUNT(CASE WHEN Marks >= 50 THEN 1 END) AS PassedStudents,
+COUNT(CASE WHEN Marks < 50 THEN 1 END) AS FailedStudents
+FROM Students;
+</pre>
+
+<p>
+This query counts the number of passed and failed students.
+</p>
+
+<hr>
+
+<h2>Advantages of CASE</h2>
+
+<table>
+
+<tr>
+<th>Advantage</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Conditional Logic</td>
+<td>Add decision-making logic inside queries</td>
+</tr>
+
+<tr>
+<td>Readable Queries</td>
+<td>Makes complex conditions easier to understand</td>
+</tr>
+
+<tr>
+<td>Flexible</td>
+<td>Works with SELECT, ORDER BY, GROUP BY, and aggregates</td>
+</tr>
+
+<tr>
+<td>Powerful Reporting</td>
+<td>Useful for data categorization</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter14-window-functions.html" class="nav-btn">← Previous → Window Functions</a>
+<a href="chapter16-stored-procedures.html" class="nav-btn">Next → Stored Procedures</a>
+</div>
+
+</div>
+
+</body>
+</html>

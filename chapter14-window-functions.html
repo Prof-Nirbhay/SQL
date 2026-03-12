@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 14 - Window Functions</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 14: SQL Window Functions</h1>
+
+<hr>
+
+<h2>What are Window Functions?</h2>
+
+<p>
+Window functions perform calculations across a set of table rows that are related to the current row. 
+Unlike <b>GROUP BY</b>, window functions do not collapse rows into a single result.
+They allow calculations while keeping the original rows.
+</p>
+
+<div class="note">
+Window functions are commonly used for ranking, running totals, and analytical queries.
+</div>
+
+<hr>
+
+<h2>Example Table: Employees</h2>
+
+<table>
+
+<tr>
+<th>EmployeeID</th>
+<th>Name</th>
+<th>Department</th>
+<th>Salary</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Rahul</td>
+<td>IT</td>
+<td>60000</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>IT</td>
+<td>75000</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>HR</td>
+<td>50000</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Neha</td>
+<td>HR</td>
+<td>65000</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Karan</td>
+<td>IT</td>
+<td>75000</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>OVER Clause</h2>
+
+<p>
+The <b>OVER()</b> clause defines the window or set of rows used for the calculation.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+FUNCTION_NAME() OVER (
+    PARTITION BY column
+    ORDER BY column
+)
+</pre>
+
+<hr>
+
+<h2>PARTITION BY</h2>
+
+<p>
+PARTITION BY divides rows into groups (partitions).  
+The window function is applied separately to each partition.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Department, Salary,
+RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS DeptRank
+FROM Employees;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Department</th>
+<th>Salary</th>
+<th>DeptRank</th>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>IT</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Karan</td>
+<td>IT</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>IT</td>
+<td>60000</td>
+<td>3</td>
+</tr>
+
+<tr>
+<td>Neha</td>
+<td>HR</td>
+<td>65000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>HR</td>
+<td>50000</td>
+<td>2</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>ORDER BY inside OVER</h2>
+
+<p>
+ORDER BY determines the order of rows inside the window function calculation.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Salary,
+ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNum
+FROM Employees;
+</pre>
+
+<hr>
+
+<h2>ROW_NUMBER()</h2>
+
+<p>
+ROW_NUMBER assigns a unique number to each row.
+Even if values are the same, row numbers will always be unique.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Salary,
+ROW_NUMBER() OVER (ORDER BY Salary DESC) AS RowNumber
+FROM Employees;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Salary</th>
+<th>RowNumber</th>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Karan</td>
+<td>75000</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>Neha</td>
+<td>65000</td>
+<td>3</td>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>60000</td>
+<td>4</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>50000</td>
+<td>5</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>RANK()</h2>
+
+<p>
+RANK assigns ranking numbers to rows.  
+If two rows have the same value, they receive the same rank, and the next rank is skipped.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Salary,
+RANK() OVER (ORDER BY Salary DESC) AS RankNumber
+FROM Employees;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Salary</th>
+<th>Rank</th>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Karan</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Neha</td>
+<td>65000</td>
+<td>3</td>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>60000</td>
+<td>4</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>50000</td>
+<td>5</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>DENSE_RANK()</h2>
+
+<p>
+DENSE_RANK is similar to RANK but does not skip rank numbers.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Name, Salary,
+DENSE_RANK() OVER (ORDER BY Salary DESC) AS DenseRank
+FROM Employees;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>Salary</th>
+<th>DenseRank</th>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Karan</td>
+<td>75000</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>Neha</td>
+<td>65000</td>
+<td>2</td>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>60000</td>
+<td>3</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>50000</td>
+<td>4</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Difference Between ROW_NUMBER, RANK and DENSE_RANK</h2>
+
+<table>
+
+<tr>
+<th>Function</th>
+<th>Duplicate Handling</th>
+<th>Skip Numbers</th>
+</tr>
+
+<tr>
+<td>ROW_NUMBER</td>
+<td>No duplicates</td>
+<td>No skipping</td>
+</tr>
+
+<tr>
+<td>RANK</td>
+<td>Same rank for duplicates</td>
+<td>Yes</td>
+</tr>
+
+<tr>
+<td>DENSE_RANK</td>
+<td>Same rank for duplicates</td>
+<td>No</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter13-view-cte.html" class="nav-btn">← Previous → View & CTE</a>
+<a href="chapter15-case.html" class="nav-btn">Next → CASE Statement</a>
+</div>
+
+</div>
+
+</body>
+</html>

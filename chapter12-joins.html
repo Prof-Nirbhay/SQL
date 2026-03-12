@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 12 - SQL Joins</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 12: SQL Joins</h1>
+
+<hr>
+
+<h2>What are SQL Joins?</h2>
+
+<p>
+SQL Joins are used to combine rows from two or more tables based on a related column between them.
+They allow data from multiple tables to be retrieved in a single query.
+</p>
+
+<div class="note">
+Joins are essential when database information is distributed across multiple tables.
+</div>
+
+<hr>
+
+<h2>Example Tables</h2>
+
+<h3>Students Table</h3>
+
+<table>
+
+<tr>
+<th>StudentID</th>
+<th>Name</th>
+<th>DepartmentID</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Rahul</td>
+<td>101</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>102</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>101</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Neha</td>
+<td>103</td>
+</tr>
+
+</table>
+
+<h3>Departments Table</h3>
+
+<table>
+
+<tr>
+<th>DepartmentID</th>
+<th>DepartmentName</th>
+</tr>
+
+<tr>
+<td>101</td>
+<td>Computer Science</td>
+</tr>
+
+<tr>
+<td>102</td>
+<td>Information Technology</td>
+</tr>
+
+<tr>
+<td>104</td>
+<td>Electronics</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>1. INNER JOIN</h2>
+
+<p>
+INNER JOIN returns only the rows where there is a match in both tables.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT columns
+FROM table1
+INNER JOIN table2
+ON table1.column = table2.column;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Students.Name, Departments.DepartmentName
+FROM Students
+INNER JOIN Departments
+ON Students.DepartmentID = Departments.DepartmentID;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>DepartmentName</th>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>Computer Science</td>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>Information Technology</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>Computer Science</td>
+</tr>
+
+</table>
+
+<p>
+Student Neha is not included because DepartmentID 103 does not exist in the Departments table.
+</p>
+
+<hr>
+
+<h2>2. LEFT JOIN</h2>
+
+<p>
+LEFT JOIN returns all rows from the left table and matching rows from the right table.
+If no match exists, NULL values are returned.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT columns
+FROM table1
+LEFT JOIN table2
+ON table1.column = table2.column;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Students.Name, Departments.DepartmentName
+FROM Students
+LEFT JOIN Departments
+ON Students.DepartmentID = Departments.DepartmentID;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>DepartmentName</th>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>Computer Science</td>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>Information Technology</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>Computer Science</td>
+</tr>
+
+<tr>
+<td>Neha</td>
+<td>NULL</td>
+</tr>
+
+</table>
+
+<p>
+Neha appears even though her department does not exist in the Departments table.
+</p>
+
+<hr>
+
+<h2>3. RIGHT JOIN</h2>
+
+<p>
+RIGHT JOIN returns all rows from the right table and matching rows from the left table.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT columns
+FROM table1
+RIGHT JOIN table2
+ON table1.column = table2.column;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Students.Name, Departments.DepartmentName
+FROM Students
+RIGHT JOIN Departments
+ON Students.DepartmentID = Departments.DepartmentID;
+</pre>
+
+<h3>Output</h3>
+
+<table>
+
+<tr>
+<th>Name</th>
+<th>DepartmentName</th>
+</tr>
+
+<tr>
+<td>Rahul</td>
+<td>Computer Science</td>
+</tr>
+
+<tr>
+<td>Priya</td>
+<td>Information Technology</td>
+</tr>
+
+<tr>
+<td>Aman</td>
+<td>Computer Science</td>
+</tr>
+
+<tr>
+<td>NULL</td>
+<td>Electronics</td>
+</tr>
+
+</table>
+
+<p>
+Electronics department appears even though no student belongs to it.
+</p>
+
+<hr>
+
+<h2>4. FULL JOIN</h2>
+
+<p>
+FULL JOIN returns all rows from both tables.
+If there is no match, NULL values appear.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT columns
+FROM table1
+FULL JOIN table2
+ON table1.column = table2.column;
+</pre>
+
+<h3>Result Concept</h3>
+
+<p>
+Combines the results of LEFT JOIN and RIGHT JOIN.
+</p>
+
+<hr>
+
+<h2>5. SELF JOIN</h2>
+
+<p>
+SELF JOIN is used when a table joins with itself.
+This is useful for hierarchical relationships.
+</p>
+
+<h3>Example Table</h3>
+
+<table>
+
+<tr>
+<th>EmployeeID</th>
+<th>Name</th>
+<th>ManagerID</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Raj</td>
+<td>NULL</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>1</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>1</td>
+</tr>
+
+</table>
+
+<h3>Example Query</h3>
+
+<pre>
+SELECT A.Name AS Employee, B.Name AS Manager
+FROM Employees A
+LEFT JOIN Employees B
+ON A.ManagerID = B.EmployeeID;
+</pre>
+
+<hr>
+
+<h2>6. CROSS JOIN</h2>
+
+<p>
+CROSS JOIN returns the Cartesian product of two tables.
+Each row of the first table is combined with every row of the second table.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT *
+FROM table1
+CROSS JOIN table2;
+</pre>
+
+<h3>Example</h3>
+
+<p>
+If table1 has 3 rows and table2 has 4 rows, the result will have 12 rows.
+</p>
+
+<hr>
+
+<h2>Comparison of Join Types</h2>
+
+<table>
+
+<tr>
+<th>Join Type</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>INNER JOIN</td>
+<td>Returns matching rows from both tables</td>
+</tr>
+
+<tr>
+<td>LEFT JOIN</td>
+<td>Returns all rows from left table</td>
+</tr>
+
+<tr>
+<td>RIGHT JOIN</td>
+<td>Returns all rows from right table</td>
+</tr>
+
+<tr>
+<td>FULL JOIN</td>
+<td>Returns all rows from both tables</td>
+</tr>
+
+<tr>
+<td>SELF JOIN</td>
+<td>Table joins with itself</td>
+</tr>
+
+<tr>
+<td>CROSS JOIN</td>
+<td>Cartesian product of tables</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter11-subquery-derived.html" class="nav-btn">← Previous → Subquery</a>
+<a href="chapter13-view-cte.html" class="nav-btn">Next → View & CTE</a>
+</div>
+
+</div>
+
+</body>
+</html>

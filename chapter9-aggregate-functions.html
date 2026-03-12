@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 9 - SQL Aggregate Functions</title>
+
+<style>
+body{
+    font-family:"Segoe UI", Tahoma, sans-serif;
+    margin:0;
+    padding:0;
+    background:#f4f6f9;
+    line-height:1.6;
+}
+
+.container{
+    max-width:1100px;
+    margin:30px auto;
+    background:#ffffff;
+    padding:30px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+    color:#2c3e50;
+}
+
+pre{
+    background:#272822;
+    color:#f8f8f2;
+    padding:15px;
+    border-radius:6px;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin:20px 0;
+}
+
+table, th, td{
+    border:1px solid #ccc;
+}
+
+th, td{
+    padding:10px;
+    text-align:left;
+}
+
+.note{
+    background:#e8f4fd;
+    padding:10px;
+    border-left:5px solid #3498db;
+    margin:15px 0;
+}
+
+.navigation{
+    display:flex;
+    justify-content:space-between;
+    margin-top:40px;
+}
+
+.nav-btn{
+    padding:10px 20px;
+    text-decoration:none;
+    background:#3498db;
+    color:white;
+    border-radius:5px;
+}
+
+.nav-btn:hover{
+    background:#2c80b4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 9: SQL Aggregate Functions</h1>
+
+<hr>
+
+<h2>What are Aggregate Functions?</h2>
+
+<p>
+Aggregate functions perform calculations on multiple rows of a table and return a single summarized value.
+These functions are commonly used in reports and data analysis.
+</p>
+
+<div class="note">
+Aggregate functions are often used with <b>GROUP BY</b> and <b>HAVING</b> clauses.
+</div>
+
+<hr>
+
+<h2>List of Common Aggregate Functions</h2>
+
+<table>
+<tr>
+<th>Function</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>COUNT()</td>
+<td>Counts number of rows</td>
+</tr>
+
+<tr>
+<td>SUM()</td>
+<td>Calculates total value</td>
+</tr>
+
+<tr>
+<td>AVG()</td>
+<td>Calculates average value</td>
+</tr>
+
+<tr>
+<td>MIN()</td>
+<td>Returns smallest value</td>
+</tr>
+
+<tr>
+<td>MAX()</td>
+<td>Returns largest value</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Example Table</h2>
+
+<table>
+<tr>
+<th>StudentID</th>
+<th>Name</th>
+<th>Department</th>
+<th>Marks</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Rahul</td>
+<td>CS</td>
+<td>85</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>IT</td>
+<td>90</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>CS</td>
+<td>70</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Neha</td>
+<td>IT</td>
+<td>95</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>1. COUNT Function</h2>
+
+<p>
+COUNT() returns the total number of rows in a table.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT COUNT(column_name)
+FROM table_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT COUNT(*) 
+FROM Students;
+</pre>
+
+<p>This returns the total number of students.</p>
+
+<hr>
+
+<h2>2. SUM Function</h2>
+
+<p>
+SUM() calculates the total of a numeric column.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT SUM(column_name)
+FROM table_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT SUM(Marks)
+FROM Students;
+</pre>
+
+<p>This returns total marks of all students.</p>
+
+<hr>
+
+<h2>3. AVG Function</h2>
+
+<p>
+AVG() calculates the average value of a column.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT AVG(column_name)
+FROM table_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT AVG(Marks)
+FROM Students;
+</pre>
+
+<p>This returns average marks.</p>
+
+<hr>
+
+<h2>4. MIN Function</h2>
+
+<p>
+MIN() returns the smallest value in a column.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT MIN(column_name)
+FROM table_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT MIN(Marks)
+FROM Students;
+</pre>
+
+<p>This returns lowest marks.</p>
+
+<hr>
+
+<h2>5. MAX Function</h2>
+
+<p>
+MAX() returns the largest value in a column.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+SELECT MAX(column_name)
+FROM table_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+SELECT MAX(Marks)
+FROM Students;
+</pre>
+
+<p>This returns highest marks.</p>
+
+<hr>
+
+<h2>Using Aggregate Functions with GROUP BY</h2>
+
+<p>
+GROUP BY groups rows with the same values and allows aggregate functions to calculate results for each group.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Department, AVG(Marks)
+FROM Students
+GROUP BY Department;
+</pre>
+
+<p>
+This calculates the average marks for each department.
+</p>
+
+<hr>
+
+<h2>Using Aggregate Functions with HAVING</h2>
+
+<p>
+HAVING is used to filter grouped data after applying aggregate functions.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT Department, AVG(Marks)
+FROM Students
+GROUP BY Department
+HAVING AVG(Marks) > 80;
+</pre>
+
+<p>
+This returns only departments whose average marks are greater than 80.
+</p>
+
+<hr>
+
+<h2>Nested SQL Functions</h2>
+
+<p>
+Nested functions occur when one SQL function is used inside another function.
+</p>
+
+<h3>Example</h3>
+
+<pre>
+SELECT MAX(AVG(Marks))
+FROM Students
+GROUP BY Department;
+</pre>
+
+<p>
+Explanation:
+</p>
+
+<ul>
+<li>First AVG(Marks) calculates average marks for each department.</li>
+<li>Then MAX() finds the highest average among departments.</li>
+</ul>
+
+<hr>
+
+<h2>Another Nested Function Example</h2>
+
+<pre>
+SELECT ROUND(AVG(Marks))
+FROM Students;
+</pre>
+
+<p>
+Here:
+</p>
+
+<ul>
+<li>AVG() calculates average marks.</li>
+<li>ROUND() rounds the average value.</li>
+</ul>
+
+<hr>
+
+<h2>Summary Table</h2>
+
+<table>
+
+<tr>
+<th>Function</th>
+<th>Purpose</th>
+<th>Example</th>
+</tr>
+
+<tr>
+<td>COUNT()</td>
+<td>Counts rows</td>
+<td>COUNT(*)</td>
+</tr>
+
+<tr>
+<td>SUM()</td>
+<td>Total value</td>
+<td>SUM(Salary)</td>
+</tr>
+
+<tr>
+<td>AVG()</td>
+<td>Average value</td>
+<td>AVG(Marks)</td>
+</tr>
+
+<tr>
+<td>MIN()</td>
+<td>Smallest value</td>
+<td>MIN(Price)</td>
+</tr>
+
+<tr>
+<td>MAX()</td>
+<td>Largest value</td>
+<td>MAX(Salary)</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter8-clauses.html" class="nav-btn">← Previous → SQL Clauses</a>
+<a href="chapter10-functions.html" class="nav-btn">Next → SQL Functions</a>
+</div>
+
+</div>
+
+</body>
+</html>

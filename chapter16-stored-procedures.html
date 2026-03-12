@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 16 - Stored Procedures</title>
+
+<style>
+
+body{
+font-family:"Segoe UI", Tahoma, sans-serif;
+margin:0;
+padding:0;
+background:#f4f6f9;
+line-height:1.6;
+}
+
+.container{
+max-width:1100px;
+margin:30px auto;
+background:#ffffff;
+padding:30px;
+border-radius:8px;
+box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h1,h2,h3{
+color:#2c3e50;
+}
+
+pre{
+background:#272822;
+color:#f8f8f2;
+padding:15px;
+border-radius:6px;
+overflow-x:auto;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin:20px 0;
+}
+
+table, th, td{
+border:1px solid #ccc;
+}
+
+th, td{
+padding:10px;
+text-align:left;
+}
+
+.note{
+background:#e8f4fd;
+padding:12px;
+border-left:5px solid #3498db;
+margin:15px 0;
+}
+
+.navigation{
+display:flex;
+justify-content:space-between;
+margin-top:40px;
+}
+
+.nav-btn{
+padding:10px 20px;
+text-decoration:none;
+background:#3498db;
+color:white;
+border-radius:5px;
+}
+
+.nav-btn:hover{
+background:#2c80b4;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Chapter 16: SQL Stored Procedures</h1>
+
+<hr>
+
+<h2>What is a Stored Procedure?</h2>
+
+<p>
+A <b>Stored Procedure</b> is a precompiled collection of SQL statements stored in the database.
+It can be executed whenever needed to perform a specific task.
+</p>
+
+<div class="note">
+Stored procedures allow developers to reuse SQL code and improve database performance.
+</div>
+
+<p>
+Instead of writing the same SQL query repeatedly, we create a stored procedure once and call it whenever needed.
+</p>
+
+<hr>
+
+<h2>Advantages of Stored Procedures</h2>
+
+<table>
+
+<tr>
+<th>Advantage</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Code Reusability</td>
+<td>Write once and reuse multiple times</td>
+</tr>
+
+<tr>
+<td>Better Performance</td>
+<td>Stored procedures are compiled and optimized</td>
+</tr>
+
+<tr>
+<td>Security</td>
+<td>Users can execute procedures without direct table access</td>
+</tr>
+
+<tr>
+<td>Reduced Network Traffic</td>
+<td>Only procedure call is sent instead of full SQL query</td>
+</tr>
+
+<tr>
+<td>Maintainability</td>
+<td>Business logic stored centrally in database</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Example Table</h2>
+
+<table>
+
+<tr>
+<th>EmployeeID</th>
+<th>Name</th>
+<th>Department</th>
+<th>Salary</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Rahul</td>
+<td>IT</td>
+<td>60000</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Priya</td>
+<td>HR</td>
+<td>55000</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Aman</td>
+<td>Finance</td>
+<td>50000</td>
+</tr>
+
+</table>
+
+<hr>
+
+<h2>Create Stored Procedure</h2>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE PROCEDURE procedure_name
+AS
+BEGIN
+    SQL statements
+END;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+CREATE PROCEDURE GetEmployees
+AS
+BEGIN
+    SELECT * FROM Employees;
+END;
+</pre>
+
+<p>
+This procedure retrieves all records from the Employees table.
+</p>
+
+<hr>
+
+<h2>Stored Procedure with Parameters</h2>
+
+<p>
+Stored procedures can accept parameters to make them more dynamic.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+CREATE PROCEDURE procedure_name
+    @parameter datatype
+AS
+BEGIN
+    SQL statements
+END;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+CREATE PROCEDURE GetEmployeeByDept
+    @Dept VARCHAR(50)
+AS
+BEGIN
+    SELECT * 
+    FROM Employees
+    WHERE Department = @Dept;
+END;
+</pre>
+
+<p>
+This procedure returns employees belonging to a specific department.
+</p>
+
+<hr>
+
+<h2>Calling (Executing) a Stored Procedure</h2>
+
+<h3>Syntax</h3>
+
+<pre>
+EXEC procedure_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+EXEC GetEmployees;
+</pre>
+
+<h3>Calling Procedure with Parameter</h3>
+
+<pre>
+EXEC GetEmployeeByDept 'IT';
+</pre>
+
+<p>
+This query retrieves employees from the IT department.
+</p>
+
+<hr>
+
+<h2>Drop Stored Procedure</h2>
+
+<p>
+If a stored procedure is no longer needed, it can be removed from the database.
+</p>
+
+<h3>Syntax</h3>
+
+<pre>
+DROP PROCEDURE procedure_name;
+</pre>
+
+<h3>Example</h3>
+
+<pre>
+DROP PROCEDURE GetEmployees;
+</pre>
+
+<hr>
+
+<h2>Summary</h2>
+
+<table>
+
+<tr>
+<th>Concept</th>
+<th>Description</th>
+</tr>
+
+<tr>
+<td>Stored Procedure</td>
+<td>Reusable block of SQL code</td>
+</tr>
+
+<tr>
+<td>CREATE PROCEDURE</td>
+<td>Create new stored procedure</td>
+</tr>
+
+<tr>
+<td>Parameters</td>
+<td>Allow dynamic input values</td>
+</tr>
+
+<tr>
+<td>EXEC</td>
+<td>Execute stored procedure</td>
+</tr>
+
+<tr>
+<td>DROP PROCEDURE</td>
+<td>Delete stored procedure</td>
+</tr>
+
+</table>
+
+<hr>
+
+<div class="navigation">
+<a href="chapter15-case.html" class="nav-btn">← Previous → CASE Statement</a>
+<a href="chapter17-functions.html" class="nav-btn">Next → Functions</a>
+</div>
+
+</div>
+
+</body>
+</html>

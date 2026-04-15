@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Advanced Excel Topics</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        line-height: 1.6;
+        background-color: #f4f6f8;
+    }
+    h1 {
+        text-align: center;
+    }
+    .section {
+        background: #0b2c66;
+        color: white;
+        padding: 10px;
+        margin-top: 20px;
+        font-size: 20px;
+    }
+    .content {
+        background: white;
+        padding: 15px;
+        border-left: 5px solid #0b2c66;
+    }
+    .example {
+        background: #eef;
+        padding: 10px;
+        margin-top: 10px;
+    }
+    code {
+        background: #ddd;
+        padding: 3px 6px;
+        border-radius: 4px;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Advanced Excel Topics with Explanation</h1>
+
+<!-- WHAT IF ANALYSIS -->
+<div class="section">What If Analysis</div>
+<div class="content">
+
+<h3>Goal Seek</h3>
+<p>Goal Seek helps you find the input value needed to achieve a desired result.</p>
+<p><b>Example:</b> If total = Price × Quantity, and you want total = 5000:</p>
+<div class="example">
+Formula: <code>=A1*B1</code><br>
+Use Goal Seek to set result to 5000 by changing Quantity.
+</div>
+
+<h3>Scenario Analysis</h3>
+<p>Used to compare different sets of values.</p>
+<div class="example">
+Example: Best Case, Worst Case, Expected Case for sales.
+</div>
+
+<h3>Data Tables</h3>
+<p>Used for sensitivity analysis.</p>
+<div class="example">
+Formula: <code>=A1*B1</code><br>
+Change multiple values of A1 or B1 to see impact.
+</div>
+
+<h3>Solver Tool</h3>
+<p>Used for optimization problems.</p>
+<div class="example">
+Example: Maximize profit by adjusting cost variables.
+</div>
+
+</div>
+
+<!-- LOGICAL FUNCTIONS -->
+<div class="section">Logical Functions</div>
+<div class="content">
+
+<h3>IF Function</h3>
+<p>Checks a condition and returns value based on TRUE/FALSE.</p>
+<div class="example">
+Formula: <code>=IF(A1>50,"Pass","Fail")</code>
+</div>
+
+<h3>IFERROR</h3>
+<p>Handles errors in formulas.</p>
+<div class="example">
+Formula: <code>=IFERROR(A1/B1,"Error")</code>
+</div>
+
+<h3>Nested IF</h3>
+<p>Multiple conditions inside IF.</p>
+<div class="example">
+<code>=IF(A1>80,"A",IF(A1>60,"B","C"))</code>
+</div>
+
+<h3>AND / OR</h3>
+<p>Used with IF for multiple conditions.</p>
+<div class="example">
+<code>=IF(AND(A1>50,B1>50),"Pass","Fail")</code>
+</div>
+
+</div>
+
+<!-- DATA VALIDATION -->
+<div class="section">Data Validation</div>
+<div class="content">
+
+<h3>Number, Date & Time Validation</h3>
+<p>Restrict user input.</p>
+<div class="example">
+Allow numbers between 1–100.
+</div>
+
+<h3>Text and List Validation</h3>
+<p>Create dropdown lists.</p>
+<div class="example">
+List: Apple, Mango, Banana
+</div>
+
+<h3>Custom Validation</h3>
+<p>Use formulas to validate input.</p>
+<div class="example">
+<code>=A1>10</code>
+</div>
+
+<h3>Dynamic Dropdown</h3>
+<p>Create dependent dropdown lists.</p>
+<div class="example">
+Select Country → Shows related Cities
+</div>
+
+</div>
+
+<!-- LOOKUP FUNCTIONS -->
+<div class="section">Lookup Functions</div>
+<div class="content">
+
+<h3>VLOOKUP / HLOOKUP</h3>
+<p>Search value in a table.</p>
+<div class="example">
+<code>=VLOOKUP(A1, A2:C10, 2, FALSE)</code>
+</div>
+
+<h3>INDEX and MATCH</h3>
+<p>Advanced lookup method.</p>
+<div class="example">
+<code>=INDEX(B2:B10, MATCH(A1, A2:A10, 0))</code>
+</div>
+
+<h3>Nested VLOOKUP</h3>
+<p>Use VLOOKUP inside another.</p>
+<div class="example">
+<code>=VLOOKUP(VLOOKUP(A1, A2:B10, 2, FALSE), D2:F10, 2, FALSE)</code>
+</div>
+
+<h3>Reverse Lookup</h3>
+<p>Lookup from right to left.</p>
+<div class="example">
+<code>=VLOOKUP(A1, CHOOSE({1,2}, B2:B10, A2:A10), 2, FALSE)</code>
+</div>
+
+<h3>INDIRECT with VLOOKUP</h3>
+<p>Dynamic sheet reference.</p>
+<div class="example">
+<code>=VLOOKUP(A1, INDIRECT("Sheet2!A2:C10"), 2, FALSE)</code>
+</div>
+
+</div>
+
+</body>
+</html>
